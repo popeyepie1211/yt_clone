@@ -17,4 +17,12 @@ app.use(express.static("public"))   // to store miscelleanous files like photos,
 
 app.use(cookieParser() )
 
-export default {app}
+
+
+//routes import
+
+import userRouter from '../routes/user.routes.js'
+app.use("/api/v1/users",userRouter)
+
+
+export {app}

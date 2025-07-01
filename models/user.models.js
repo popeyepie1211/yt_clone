@@ -1,6 +1,6 @@
 import mongoose, {Schema} from "mongoose"
-import { startTransition } from "react"
-
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 const userSchema= new Schema(
     {
       username:{
@@ -31,7 +31,7 @@ const userSchema= new Schema(
         type:String,
         required: true
       },
-      coverImg:{
+      coverImage:{
         type:String
       },
       watchHistory:{
@@ -88,4 +88,4 @@ userSchema.methods.generateRefreshToken = function(){
         }
     )
 }
-export const User=mongoose.model("User",videoSchema)
+export const User=mongoose.model("User",userSchema)

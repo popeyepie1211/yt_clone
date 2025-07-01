@@ -3,19 +3,25 @@
 //  and forward the error. asyncHandler helps by catching those errors for you.
 
 
-const asyncHandler= (fn)=> async(req,res,next)=>{
-    try{
-        await fn(req, res, next)
-    }catch(error){
-        res.status(error.code || 500).json({   //Sets the HTTP status code to:error.code if it's defined (maybe something like 400, 404)
-                                               // Otherwise, defaults to 500 (Internal Server Error)
-           
-        success:false, //sends json response as false
-            message: error.message // sends a json response of error description
-        })
-    }
+const asyncHandler = (fn) => async (req, res, next) => {
+  try {
+    return await fn(req, res, next);
+  } catch (error) {
+    console.error("❌ Uncaught error:", error);
 
-}
+    const statusCode = (error.statusCode >= 100 && error.statusCode < 600)
+      ? error.statusCode
+      : 500;
+
+    res.status(statusCode).json({
+      success: false,
+      message: error.message || "Internal Server Error",
+    });
+  }
+};
+
+
+
 
 
 export {asyncHandler}
